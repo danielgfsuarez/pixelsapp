@@ -14,6 +14,14 @@ apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
 
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Users/dsuarez/AndroidStudioProjects/PixelsApp/store/pixels_appkey.jks')
+            keyPassword '12345678'
+            keyAlias 'pixel_app'
+            storePassword '12345678'
+        }
+    }
     namespace 'com.example.pixelsapp'
     compileSdk 33
 
@@ -44,6 +52,7 @@ android {
         }
 
         release {
+            signingConfig signingConfigs.release
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
