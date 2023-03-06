@@ -16,7 +16,7 @@ apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
 android {
 
     namespace 'com.example.pixelsapp'
-    compileSdk 33
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.example.pixelsapp"
