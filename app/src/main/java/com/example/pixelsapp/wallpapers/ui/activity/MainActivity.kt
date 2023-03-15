@@ -1,4 +1,4 @@
-package com.example.pixelsapp.wallpapers
+package com.example.pixelsapp.wallpapers.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

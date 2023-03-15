@@ -1,8 +1,8 @@
 package com.example.pixelsapp.wallpapers.framework.di
 
-import com.example.pixelsapp.BuildConfig
 import com.example.pixelsapp.wallpapers.framework.network.api.WallpapersApi
 import com.example.pixelsapp.wallpapers.framework.network.interceptor.AuthorizationInterceptor
+import com.google.firebase.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -22,7 +22,7 @@ object NetworkModule {
     const val TIMEOUT_SECONDS = 15L
 
     @Provides
-    fun providerLoginInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+    fun provideLoginInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         setLevel(
             if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BODY
@@ -33,7 +33,7 @@ object NetworkModule {
     }
 
     @Provides
-    fun providerAuthorizationInterceptor(): AuthorizationInterceptor =
+    fun provideAuthorizationInterceptor(): AuthorizationInterceptor =
         AuthorizationInterceptor(BuildConfig.PRIVATE_KEY)
 
     @Provides
@@ -57,11 +57,11 @@ object NetworkModule {
 
     @Provides
     fun providesRetrofit(
-        okhhtpClient: OkHttpClient,
+        okhttpClient: OkHttpClient,
         converterFactory: GsonConverterFactory
     ): WallpapersApi = Retrofit.Builder()
         .baseUrl(BuildConfig.BASE_URL)
-        .client(okhhtpClient)
+        .client(okhttpClient)
         .addConverterFactory(converterFactory)
         .build()
         .create(WallpapersApi::class.java)
