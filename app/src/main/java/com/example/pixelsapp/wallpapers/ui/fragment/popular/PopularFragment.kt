@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -53,7 +54,7 @@ class PopularFragment : Fragment() {
         photoAdapter = PhotoAdapter(::detail)
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
         with(binding.recyclerView) {
-            scrollToPosition(0)
+            scrollToPosition(INIT_POSITION)
             layoutManager = gridLayoutManager
             setHasFixedSize(true)
             adapter = photoAdapter
@@ -73,12 +74,14 @@ class PopularFragment : Fragment() {
     private fun observerLoafState() {
         lifecycleScope.launch {
             photoAdapter.loadStateFlow.collectLatest { loadState ->
+                binding.imagePulseAnimation.isVisible =
+                    loadState.source.refresh is LoadState.Loading
                 when (loadState.refresh) {
                     is LoadState.Loading -> {
                         binding.imagePulseAnimation.pulseAnimation()
                     }
                     is LoadState.NotLoading -> {
-                        binding.imagePulseAnimation.visibility = View.GONE
+//                        binding.imagePulseAnimation.visibility = View.GONE
                         binding.imagePulseAnimation.animationCancel()
 
                     }
@@ -98,6 +101,10 @@ class PopularFragment : Fragment() {
                 data
             )
         )
+    }
+
+    companion object {
+        const val INIT_POSITION = 0
     }
 
 }
