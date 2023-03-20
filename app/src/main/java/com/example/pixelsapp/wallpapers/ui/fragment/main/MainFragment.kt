@@ -56,5 +56,4 @@ class MainFragment : Fragment() {
             viewPager.adapter = pagerAdapter
         }
     }
-
 }
